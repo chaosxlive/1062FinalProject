@@ -51,6 +51,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.awt.FontFormatException;
 
 import javax.swing.border.LineBorder;
 
@@ -88,7 +89,6 @@ public class ServerCode extends java.lang.Thread {
 	private ScreenShotTool sTool = new ScreenShotTool();
 	private FrameShake frameshake = new FrameShake();
 	
-//	private AudioClip se_DingDong = Applet.newAudioClip(getClass().getResource("/together/se/ding-dong.mp3"));
 	private AudioInputStream audioInputStream;
  	private AudioFormat audioFormat;
  	private Clip se;
@@ -147,10 +147,8 @@ public class ServerCode extends java.lang.Thread {
 		});
 		
 		panel.setOpaque(false);
-//		panel.setBounds(0, 0, 444, 272);
 		frmServer.getContentPane().add(panel);
 		panel.setLayout(null);
-//		btnNewButton.setBounds(347, 240, 87, 23);
 		panel.add(btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			
@@ -175,7 +173,6 @@ public class ServerCode extends java.lang.Thread {
 				}
 			}
 		});
-		textPane.setFont(new Font("華康歐陽詢體W5", Font.PLAIN, 12));
 		textPane.setBackground(Color.WHITE);
 		textPane.setEditable(false);
 		panel.add(scrollPane);
@@ -230,9 +227,16 @@ public class ServerCode extends java.lang.Thread {
 		emjpanel.setLayout(null);
 		
 		EmojiTitle.setBorder(new LineBorder(new Color(0, 255, 255), 2));
-		EmojiTitle.setFont(new Font("華康竹風體W4", Font.BOLD, 13));
 		EmojiTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		EmojiTitle.setBounds(0, 0, 100, 20);
+		
+		try {
+			textPane.setFont(Font.createFont(Font.TRUETYPE_FONT,  getClass().getResourceAsStream("/together/fonts/g.ttc")).deriveFont(Font.PLAIN, 12));
+			EmojiTitle.setFont(Font.createFont(Font.TRUETYPE_FONT,  getClass().getResourceAsStream("/together/fonts/c.ttc")).deriveFont(Font.BOLD, 13));
+		} catch (FontFormatException | IOException e1) {
+			e1.printStackTrace();
+		}
+		
 		//e1
 		emjpanel.add(EmojiTitle);
 		emoji01.setIcon(new ImageIcon(ServerCode.class.getResource("/together/image/Imo_1.png")));
@@ -521,17 +525,6 @@ public class ServerCode extends java.lang.Thread {
 		se.open(audioInputStream);
 	}
 	
-	/*
-	private void addDoc(String string, Color c) {
-		StyleContext sc = StyleContext.getDefaultStyleContext();
-	    AttributeSet aset = sc.addAttribute(SimpleAttributeSet.EMPTY,
-	                                        StyleConstants.Foreground, c);
-	   
-	    int len = textPane.getDocument().getLength(); // same value as getText().length();
-	    textPane.setCaretPosition(len);  // place caret at the end (with no selection)
-	    textPane.setCharacterAttributes(aset, false);
-	    textPane.replaceSelection(string); // there is no selection, so inserts at caret
-	}	*/
 	private void addDoc(String string) {
 		javax.swing.text.Document document = textPane.getDocument();
 		try {

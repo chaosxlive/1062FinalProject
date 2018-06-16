@@ -1,3 +1,8 @@
+/*
+ * Program name: Together
+ * Made by: Jason Weng
+ */
+
 package together;
 
 import java.io.File;

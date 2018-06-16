@@ -37,6 +37,7 @@ import javax.swing.JFileChooser;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 
 import javax.swing.JScrollPane;
 
@@ -142,11 +143,9 @@ public class ClientCode extends java.lang.Thread {
 		});
 		
 		panel.setOpaque(false);
-//		panel.setBounds(0, 0, 444, 272);
 		
 		frmClient.getContentPane().add(panel);
 		panel.setLayout(null);
-//		textField.setBounds(10, 241, 327, 21);
 		panel.add(textField);
 		textField.setEditable(false);
 		textField.setColumns(10);
@@ -168,21 +167,16 @@ public class ClientCode extends java.lang.Thread {
 			}
 		});
 
-//		btnNewButton.setBounds(347, 240, 87, 23);
 		panel.add(btnNewButton);
-//		scrollPane.setBounds(10, 10, 327, 221);
 		panel.add(scrollPane);
-		textPane.setFont(new Font("華康歐陽詢體W5", Font.PLAIN, 12));
 		scrollPane.setViewportView(textPane);
 		
 		textPane.setBackground(Color.WHITE);
 		textPane.setEditable(false);
-//		panel_1.setBounds(0, 0, 444, 272);
 		
 		frmClient.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 		lblNewLabel.setIcon(new ImageIcon(ClientCode.class.getResource("/together/image/bg1.jpg")));
-//		lblNewLabel.setBounds(0, 0, 444, 272);
 		
 		
 
@@ -191,7 +185,6 @@ public class ClientCode extends java.lang.Thread {
 		 */
 		emojiswtich.setEnabled(false);
 		emojiswtich.setIcon(new ImageIcon(ClientCode.class.getResource("/together/image/IMO_0.png")));
-//		emojiswtich.setBounds(340, 10, 32, 32);
 		emojiswtich.addActionListener(new ActionListener() {
 			
 			@Override
@@ -211,14 +204,20 @@ public class ClientCode extends java.lang.Thread {
 		panel.add(emojiswtich);
 		
 		emjpanel.setVisible(false);
-//		emjpanel.setBounds(340, 42, 100, 188);
 		panel.add(emjpanel);
 		emjpanel.setLayout(null);
 		
 		EmojiTitle.setBorder(new LineBorder(new Color(0, 255, 255), 2));
-		EmojiTitle.setFont(new Font("華康竹風體W4", Font.BOLD, 13));
 		EmojiTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		EmojiTitle.setBounds(0, 0, 100, 20);
+		
+		try {
+			textPane.setFont(Font.createFont(Font.TRUETYPE_FONT,  getClass().getResourceAsStream("/together/fonts/g.ttc")).deriveFont(Font.PLAIN, 12));
+			EmojiTitle.setFont(Font.createFont(Font.TRUETYPE_FONT,  getClass().getResourceAsStream("/together/fonts/c.ttc")).deriveFont(Font.BOLD, 13));
+		} catch (FontFormatException | IOException e1) {
+			e1.printStackTrace();
+		}
+		
 		//e1
 		emjpanel.add(EmojiTitle);
 		emoji01.setIcon(new ImageIcon(ClientCode.class.getResource("/together/image/Imo_1.png")));
@@ -415,7 +414,6 @@ public class ClientCode extends java.lang.Thread {
 		//--
 		
 		snapbtn.setIcon(new ImageIcon(ClientCode.class.getResource("/together/image/snap_30.png")));
-//		snapbtn.setBounds(371, 10, 32, 33);
 		snapbtn.setEnabled(false);
 		panel.add(snapbtn);
 		snapbtn.addActionListener(new ActionListener() {
@@ -439,7 +437,6 @@ public class ClientCode extends java.lang.Thread {
 						try {
 							thread.join();
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 						addDoc(name + ": ");
@@ -453,7 +450,6 @@ public class ClientCode extends java.lang.Thread {
 		});
 		
 		imgbtn.setIcon(new ImageIcon(ClientCode.class.getResource("/together/image/img30.png")));
-//		imgbtn.setBounds(402, 10, 32, 32);
 		imgbtn.setEnabled(false);
 		panel.add(imgbtn);
 		imgbtn.addActionListener(new ActionListener() {
@@ -533,7 +529,6 @@ public class ClientCode extends java.lang.Thread {
 		try {
 			document.insertString(document.getLength(), string, null);
 		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -682,9 +677,6 @@ public class ClientCode extends java.lang.Thread {
 				writer.flush();
 				fname = reader.readLine();
 								
-				//test
-				//addClickableAndResizedDoc("./src/together/tools/SSTtemp/screenshot.png");
-				//testEND
 				addDoc("Connected with " + fname + ".\n");
 				
 				while(true) {
